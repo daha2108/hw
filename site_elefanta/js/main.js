@@ -3,27 +3,24 @@ const login = document.getElementById('login')
 const pass1 = document.getElementById('pass1')
 
 const pass2 = document.getElementById('pass2')
-pass2.disable = true
-pass2.placeholder = "repeate password"
+pass2.disabled = true
 
 const submit = document.getElementById('submit')
-submit.disable = true
-submit.innerText = "submit" 
+submit.disabled = true
 
 let hash = ''
 
 pass1.oninput = function (event) {
   event.target.test = Boolean(event.target.value.match(/\d/)
-      && event.target.value.match(/\w/)
-        && event.target.value.length > 7)
+    && event.target.value.match(/\w/)
+      && event.target.value.length > 7)
   console.log(event.target.test)
   event.target.style.color = event.target.test ? 'green' : 'red'
 }
 
 pass1.onchange = function (event) {
   if (event.target.test) {
-    pass2.disable = false
-    
+    pass2.disabled = false
   }
 }
 
@@ -36,8 +33,8 @@ pass2.oninput = function (event) {
 pass2.onchange = function (event) {
   if (event.target.value === pass1.value) {
     hash = Sha256.hash (event.target.value)
-    submit.disable = !(hash && login.value.match(/\S/))
-  }  
+    submit.disabled = !(hash && login.value.match(/\S/))
+  }
 }
 
 submit.onclick = function (event) {
@@ -47,12 +44,12 @@ submit.onclick = function (event) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        passhash: hash
+      passhash: hash
     })
   }).then(response => {console.log (response.ok)
     if (response.ok) {
-        document.cookie = `login=${login.value}`
-        document.cookie = `pass=${hash}`
+      document.cookie = `login=${login.value}`
+      document.cookie = `pass=${hash}`
     }
   })
 }

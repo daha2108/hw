@@ -42,6 +42,10 @@
 		outline: none;
 	}
 
+	input:active, input:focus {
+		border: 1px solid inherit;
+	}
+
 	button{
 		margin-top: 40px;
 		margin-bottom: 10px;

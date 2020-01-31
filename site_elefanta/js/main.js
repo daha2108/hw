@@ -10,52 +10,53 @@ submit.disabled = true
 
 let hash = ''
 
-pass1.oninput = function (event) {
-  event.target.test = Boolean(event.target.value.match(/\d/)
-    && event.target.value.match(/\w/)
-      && event.target.value.length > 7)
-  console.log(event.target.test)
-  event.target.style.color = event.target.test ? 'green' : 'red'
+pass1.oninput = function(event) {
+    event.target.test = Boolean(event.target.value.match(/\d/) &&
+        event.target.value.match(/\w/) &&
+        event.target.value.length > 7)
+    console.log(event.target.test)
+    event.target.style.color = event.target.test ? 'green' : 'red'
 }
 
-pass1.onchange = function (event) {
-  if (event.target.test) {
-    pass2.disabled = false
-  }
-}
-
-pass2.oninput = function (event) {
-  event.target.style.color = 
-    event.target.value === pass1.value 
-      ? 'green' : 'red'
-}
-
-pass2.onchange = function (event) {
-  if (event.target.value === pass1.value) {
-    hash = Sha256.hash (event.target.value)
-    submit.disabled = !(hash && login.value.match(/\S/))
-  }
-}
-
-submit.onclick = function (event) {
-  fetch (`https://garevna-rest-api.glitch.me/user/${login.value}`,{
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      passhash: hash
-    })
-  }).then(response => {console.log (response.ok)
-    if (response.ok) {
-      document.cookie = `login=${login.value}`
-      document.cookie = `pass=${hash}`
+pass1.onchange = function(event) {
+    if (event.target.test) {
+        pass2.disabled = false
     }
-  })
 }
 
-function getFileName () {
-	var file = document.getElementById ('avatar').value;
-	file = file.replace (/\\/g, «/»).split ('/').pop ();
-	document.getElementById ('file-name').innerHTML = 'Имя файла: ' + file;
+pass2.oninput = function(event) {
+    event.target.style.color =
+        event.target.value === pass1.value ?
+        'green' : 'red'
 }
+
+pass2.onchange = function(event) {
+    if (event.target.value === pass1.value) {
+        hash = Sha256.hash(event.target.value)
+        submit.disabled = !(hash && login.value.match(/\S/))
+    }
+}
+
+submit.onclick = function(event) {
+    fetch(`https://garevna-rest-api.glitch.me/user/${login.value}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            passhash: hash
+        })
+    }).then(response => {
+        console.log(response.ok)
+        if (response.ok) {
+            document.cookie = `login=${login.value}`
+            document.cookie = `pass=${hash}`
+        }
+    })
+}
+
+// function getFileName() {
+//     let file = document.getElementById('avatar').value;
+//     file = file.replace(/\\/g, «/»).split ('/').pop ();
+//         document.getElementById('file-name').innerHTML = 'Имя файла: ' + file
+// }

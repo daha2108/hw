@@ -53,3 +53,9 @@ submit.onclick = function (event) {
     }
   })
 }
+
+function getFileName () {
+	var file = document.getElementById ('avatar').value;
+	file = file.replace (/\\/g, «/»).split ('/').pop ();
+	document.getElementById ('file-name').innerHTML = 'Имя файла: ' + file;
+}

@@ -27,7 +27,7 @@ let hash = '',
 
 pass1.oninput = function(event) {
     event.target.test = Boolean(event.target.value.match(/\d/) &&
-        event.target.value.match(/\w/) &&
+        event.target.value.match(/[A-z]/) &&
         event.target.value.length > 7)
     event.target.style.color = event.target.test ? 'green' : 'red'
 }
@@ -62,9 +62,11 @@ submit.onclick = function(event) {
             avatar: img.src
         })
     }).then((response) => {
-        if (response.status.ok) {
+        if (response.ok) {
             document.cookie = `login = $ { login.value }`
             document.cookie = `hash = $ { hash }`
-        } else throw new Error('Fetch failed')
+        } else {
+            throw new Error('Fetch failed')
+        }
     })
 }

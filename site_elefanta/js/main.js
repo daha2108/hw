@@ -63,8 +63,8 @@ submit.onclick = function(event) {
         })
     }).then((response) => {
         if (response.ok) {
-            document.cookie = `login = $ { login.value }`
-            document.cookie = `hash = $ { hash }`
+            document.cookie = `login = ${login.value}`
+            document.cookie = `hash = ${hash}`
         } else {
             throw new Error('Fetch failed')
         }

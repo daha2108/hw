@@ -5,16 +5,30 @@ const pass1 = document.getElementById('pass1')
 const pass2 = document.getElementById('pass2')
 pass2.disabled = true
 
+const img = document.getElementById('img')
+
+const avatar = document.getElementById('avatar')
+
 const submit = document.getElementById('submit')
 submit.disabled = true
 
-let hash = ''
+avatar.onchange = function(event) {
+    let data
+    const reader = new FileReader
+    reader.onload = function(event) {
+        data = event.target.result
+        img.src = data
+    }
+    reader.readAsDataURL(event.target.files[0])
+}
+
+let hash = '',
+    test
 
 pass1.oninput = function(event) {
     event.target.test = Boolean(event.target.value.match(/\d/) &&
         event.target.value.match(/\w/) &&
         event.target.value.length > 7)
-    console.log(event.target.test)
     event.target.style.color = event.target.test ? 'green' : 'red'
 }
 
@@ -44,19 +58,13 @@ submit.onclick = function(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            passhash: hash
+            passhash: hash,
+            avatar: img.src
         })
-    }).then(response => {
-        console.log(response.ok)
-        if (response.ok) {
-            document.cookie = `login=${login.value}`
-            document.cookie = `pass=${hash}`
-        }
+    }).then((response) => {
+        if (response.status.ok) {
+            document.cookie = `login = $ { login.value }`
+            document.cookie = `hash = $ { hash }`
+        } else throw new Error('Fetch failed')
     })
 }
-
-// function getFileName() {
-//     let file = document.getElementById('avatar').value;
-//     file = file.replace(/\\/g, «/»).split ('/').pop ();
-//         document.getElementById('file-name').innerHTML = 'Имя файла: ' + file
-// }

@@ -9,7 +9,13 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <ul>
+        <li><a href="#">Logo</a></li>
+        <li><a id="sign_up" href="#">Sign up</a></li>
+        <li><a id="sign_in" href="#">Sign in</a></li>
+        <li><a id="logout" href="#">Logout</a></li>
+    </ul>
+    <div id="container_sign_up" class="container_sign_up">
         <h1>Hello, Friend!</h1>
         <p class="about">Enter your personal details and start jorney with us</p>
         <img src="img/avatar.png" id="img" alt="avatar">
@@ -22,6 +28,13 @@
         <p>Repeat password</p>
         <input type="password" id="pass2" placeholder="Repeate password">
         <button id="submit">Sign up</button>
+    </div>
+    <div id="container_sign_in" class="container_sign_up">
+        <p class="about" id="container_sign_up_success"></p>
+        <p class="about">Enter your login and password</p>
+        <input type="login" id="login" placeholder="Login">
+        <input type="password" id="pass1" placeholder="Password">
+        <button id="submit">Sign in</button>
     </div>
     <script src="js/main.js"></script>
 </body>

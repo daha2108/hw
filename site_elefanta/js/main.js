@@ -1,16 +1,28 @@
+const signIn = document.getElementById('sign_in')
+const containerSignIn = document.getElementById('container_sign_in')
+
+const signUp = document.getElementById('sign_up')
+const containerSignUp = document.getElementById('container_sign_up')
+const containerSignUpSuccess = document.getElementById('container_sign_up_success')
+
+const logout = document.getElementById('logout')
+
 const login = document.getElementById('login')
-
 const pass1 = document.getElementById('pass1')
-
 const pass2 = document.getElementById('pass2')
 pass2.disabled = true
 
 const img = document.getElementById('img')
-
 const avatar = document.getElementById('avatar')
 
 const submit = document.getElementById('submit')
 submit.disabled = true
+
+signUp.onclick = function(event) {
+    containerSignUp.style = `
+		display: block;
+		transition: ease 0.5s;`
+}
 
 avatar.onchange = function(event) {
     let data
@@ -65,8 +77,22 @@ submit.onclick = function(event) {
         if (response.ok) {
             document.cookie = `login = ${login.value}`
             document.cookie = `hash = ${hash}`
+            containerSignUp.style = `
+				display: none;`
+            containerSignUpSuccess.style = `
+				display: block;
+				text-align: center;`
+            containerSignUpSuccess.innerText = `${login.value}, you have successfully registered!`
+            containerSignIn.style = `
+				display: block;`
         } else {
             throw new Error('Fetch failed')
         }
     })
+}
+
+signIn.onclick = function(event) {
+    containerSignIn.style = `
+		display: block;
+		transition: ease 0.5s;`
 }
